@@ -63,23 +63,38 @@ This README provides step-by-step instructions on setting up and managing Azure 
 
 ## Terraform Commands
 
+# Auto correct format and style
+    ```
+    $ terraform fmt
+    ```
+
+# Validate
+- Validate configuration files:
+    ```
+    $ terraform validate
+    ```
+
 # Initialize Terraform
-- Navigate to the directory containing your Terraform configuration files (`main.tf`, etc.) and initialize Terraform:
+- Navigate to the directory containing your Terraform configuration files (`provider.tf`, etc.) and initialize specified configuration:
     ```
     $ terraform init
     ```
 # Plan the Terraform Changes
-- Generate and show an execution plan:
+- Generate and show an execution plan that what are the changes are goining to create/modify/delete:
     ```
     $ terraform plan
     ```
 # Apply the Terraform Changes
-- Apply the changes required to reach the desired state of the configuration:
+- Apply the changes required to reach the desired state of the configuration post approval(Yes/No):
     ```
     $ terraform apply
     ```
+- With variables file
+    ```
+    $ terraform apply -var-file="terraform.tfvars"
+    ```
 # Destroy the Terraform-managed Infrastructure
-- Destroy the Terraform-managed infrastructure:
+- Destroy the Terraform-managed infrastructure post approval(Yes/No):
      ```
     $ terraform destroy
      ```
