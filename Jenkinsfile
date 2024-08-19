@@ -35,8 +35,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Init========"
                 // Initialize Terraform
-                // bat '''terraform init'''
-                sh '\'wsl terraform init\''
+                // sh '\'wsl terraform init\''
+                bat '''terraform init'''
                 
             }
             post {
@@ -53,7 +53,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Plan========"
                 // Generate and show an execution plan
-                sh 'terraform plan -out=tfplan'
+                // sh 'terraform plan -out=tfplan'
+                bat 'terraform plan -out=tfplan'
             }
             post {
                 success {
@@ -69,7 +70,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Apply========"
                 // Apply the changes required to reach the desired state
-                sh 'terraform apply -input=false tfplan'
+                // sh 'terraform apply -input=false tfplan'
+                bat 'terraform apply -auto-approve'
             }
             post {
                 success {
