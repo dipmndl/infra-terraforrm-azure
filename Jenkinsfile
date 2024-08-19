@@ -35,8 +35,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Init========"
                 // Initialize Terraform
-                sh 'terraform init'
                 // bat '''terraform init'''
+                sh '\'wsl terraform init\''
                 
             }
             post {
