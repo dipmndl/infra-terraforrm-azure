@@ -97,8 +97,8 @@ pipeline {
                     echo "========Terraform Destroy execution failed========"
                 }
             }
-        }
-    } */
+        }*/
+    } 
 
     post {
         always {
