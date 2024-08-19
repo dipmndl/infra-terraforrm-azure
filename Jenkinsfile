@@ -66,7 +66,7 @@ pipeline {
             }
         }
 
-        /* stage("Terraform Apply") {
+        stage("Terraform Apply") {
             steps {
                 echo "========executing Terraform Apply========"
                 // Apply the changes required to reach the desired state
@@ -81,8 +81,8 @@ pipeline {
                     echo "========Terraform Apply execution failed========"
                 }
             }
-        } */
-        stage("Terraform Destroy") {
+        }
+        /* stage("Terraform Destroy") {
             steps {
                 echo "========executing Terraform Destroy========"
                 // Apply the changes required to reach the desired state
@@ -98,7 +98,7 @@ pipeline {
                 }
             }
         }
-    }
+    } */
 
     post {
         always {
