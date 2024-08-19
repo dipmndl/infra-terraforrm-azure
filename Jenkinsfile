@@ -1,10 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'hashicorp/terraform:latest' // Use the Terraform image from Docker Hub
-            args '-u root' // Run as root user (optional, depending on your requirements)
-        }
-    }
+    agent any
+        tools 
+        {
+            terraform 'terraform1.9.4'
+         }
+
+
 
     environment {
         TF_VAR_subscription_id = credentials('azure_subscription_id')
@@ -17,6 +18,7 @@ pipeline {
         stage("Checkout") {
             steps {
                 echo "========executing Checkout========"
+                // Checkout code from the main branch
                 git branch: 'main', url: 'https://github.com/dipmndl/infra-terraforrm-azure.git'
             }
             post {
@@ -32,7 +34,9 @@ pipeline {
         stage("Terraform Init") {
             steps {
                 echo "========executing Terraform Init========"
+                // Initialize Terraform
                 sh 'terraform init'
+                
             }
             post {
                 success {
@@ -47,6 +51,7 @@ pipeline {
         stage("Terraform Plan") {
             steps {
                 echo "========executing Terraform Plan========"
+                // Generate and show an execution plan
                 sh 'terraform plan -out=tfplan'
             }
             post {
@@ -62,6 +67,7 @@ pipeline {
         stage("Terraform Apply") {
             steps {
                 echo "========executing Terraform Apply========"
+                // Apply the changes required to reach the desired state
                 sh 'terraform apply -input=false tfplan'
             }
             post {
@@ -78,6 +84,7 @@ pipeline {
     post {
         always {
             echo "========always========"
+            // Clean up workspace after execution
             cleanWs()
         }
         success {
