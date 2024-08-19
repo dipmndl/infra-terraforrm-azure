@@ -66,7 +66,7 @@ pipeline {
             }
         }
 
-        stage("Terraform Apply") {
+        /* stage("Terraform Apply") {
             steps {
                 echo "========executing Terraform Apply========"
                 // Apply the changes required to reach the desired state
@@ -79,6 +79,22 @@ pipeline {
                 }
                 failure {
                     echo "========Terraform Apply execution failed========"
+                }
+            }
+        } */
+        stage("Terraform Destroy") {
+            steps {
+                echo "========executing Terraform Destroy========"
+                // Apply the changes required to reach the desired state
+                // sh 'terraform apply -input=false tfplan'
+                bat 'terraform destroy -auto-approve'
+            }
+            post {
+                success {
+                    echo "========Terraform Destroy executed successfully========"
+                }
+                failure {
+                    echo "========Terraform Destroy execution failed========"
                 }
             }
         }
