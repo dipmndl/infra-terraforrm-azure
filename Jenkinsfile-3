@@ -28,7 +28,9 @@ pipeline {
             steps {
                 echo "========executing Terraform Init========"
                 // Initialize Terraform
-                sh 'terraform init'
+                // sh '\'wsl terraform init\''
+                bat '''terraform init'''
+                
             }
             post {
                 success {
@@ -44,7 +46,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Plan========"
                 // Generate and show an execution plan
-                sh 'terraform plan -out=tfplan'
+                // sh 'terraform plan -out=tfplan'
+                bat 'terraform plan -out=tfplan'
             }
             post {
                 success {
@@ -60,7 +63,8 @@ pipeline {
             steps {
                 echo "========executing Terraform Apply========"
                 // Apply the changes required to reach the desired state
-                sh 'terraform apply -auto-approve'
+                // sh 'terraform apply -input=false tfplan'
+                bat 'terraform apply -auto-approve'
             }
             post {
                 success {
@@ -74,8 +78,9 @@ pipeline {
         stage("Terraform Destroy") {
             steps {
                 echo "========executing Terraform Destroy========"
-                // Destroy the resources managed by Terraform
-                sh 'terraform destroy -auto-approve'
+                // Apply the changes required to reach the desired state
+                // sh 'terraform apply -input=false tfplan'
+                bat 'terraform destroy -auto-approve'
             }
             post {
                 success {
