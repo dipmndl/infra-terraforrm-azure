@@ -1,6 +1,12 @@
 ## Terraform Azure Configuration
 This README provides step-by-step instructions on setting up and managing Azure resources using Terraform and the Azure CLI.
 ![image](https://github.com/user-attachments/assets/5177c19a-c471-4e9c-97a8-50cd6bacf829)
+![image](https://github.com/user-attachments/assets/5b0c4a89-df8b-4415-8fe6-136c8a71e8f4)
+
+RDS:-
+![image](https://github.com/user-attachments/assets/470f3fc6-4446-4b43-b591-324d1b7bb2b5)
+Data Catalog Architecture:-
+![image](https://github.com/user-attachments/assets/e8898fd6-8469-4a1e-a872-e146d9956ed2)
 
 ## Prerequisites
 - Azure CLI installed and configured.
