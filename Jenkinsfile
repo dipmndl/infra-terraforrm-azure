@@ -5,6 +5,12 @@ pipeline {
         TF_VAR_client_id = credentials('azure_client_id')
         TF_VAR_client_secret = credentials('azure_client_secret')
         TF_VAR_tenant_id = credentials('azure_tenant_id')
+         // SonarQube token from Jenkins credentials
+        SONAR_AUTH_TOKEN = credentials('sonarqube-jenkins-tokens')
+    }
+     tools {
+        // Your SonarQube Scanner configuration
+        sonarQubeScanner 'SonarQube-Docker' 
     }
 
     stages {
@@ -23,7 +29,30 @@ pipeline {
                 }
             }
         }
-
+        stage("SonarQube analysis"){
+            steps{
+                echo "========executing SonarQube analysis========"
+                script {
+                    def scannerHome = tool 'SonarQube-Docker';
+                    withSonarQubeEnv('Your SonarQube Server', installationName: 'SonarQube-Docker') {
+                        sh """
+                           ${scannerHome}/bin/sonar-scanner \
+                           -Dsonar.projectKey=dipmndl_infra_terraform_azur \
+                           -Dsonar.sources=. \
+                           -Dsonar.host.url=http://127.0.1.1:9000\
+                           -Dsonar.login=${env.SONAR_AUTH_TOKEN}
+                        """
+                    }
+            }
+            post{
+                success{
+                    echo "========SonarQube analysis executed successfully========"
+                }
+                failure{
+                    echo "========SonarQube analysis execution failed========"
+                }
+            }
+        }
         stage("Terraform Init") {
             steps {
                 echo "========executing Terraform Init========"
