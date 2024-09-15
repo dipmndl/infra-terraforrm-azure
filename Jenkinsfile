@@ -1,7 +1,7 @@
 pipeline {
       agent {
         docker {
-            image 'ubuntu-image'  // Use the local Docker image
+            image 'ubuntu-image:Latest'  // Use the local Docker image
             args '--network host'  // Use host network to ensure proper Docker access
             reuseNode true        // Reuse the existing node to avoid pulling the image
             customWorkspace '/var/lib/jenkins/workspace' // Custom workspace on the Jenkins host
@@ -22,7 +22,7 @@ pipeline {
                     sh 'docker images'
                 }
         }
-        
+
         stage("Checkout") {
             steps {
                 echo "========executing Checkout========"
