@@ -1,16 +1,12 @@
 pipeline {
     agent { dockerfile true }
-    
+
     environment {
         TF_VAR_subscription_id = credentials('azure_subscription_id')
         TF_VAR_client_id = credentials('azure_client_id')
         TF_VAR_client_secret = credentials('azure_client_secret')
         TF_VAR_tenant_id = credentials('azure_tenant_id')
         SONAR_AUTH_TOKEN = credentials('sonarqube-jenkins-tokens')
-    }
-
-    tools {
-        sonarQubeScanner 'SonarQube-Docker'
     }
 
     stages {
@@ -33,8 +29,9 @@ pipeline {
             steps {
                 echo "========executing SonarQube analysis========"
                 script {
-                    def scannerHome = tool 'SonarQube-Docker'
-                    withSonarQubeEnv('Your SonarQube Server', installationName: 'SonarQube-Docker') {
+                    // Assuming SonarQube Scanner tool is installed in Jenkins
+                    def scannerHome = tool name: 'SonarQube-Docker', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('Your SonarQube Server') {
                         sh """
                            ${scannerHome}/bin/sonar-scanner \
                            -Dsonar.projectKey=dipmndl_infra_terraform_azur \
@@ -84,21 +81,6 @@ pipeline {
                 }
             }
         }
-
-        /* stage("Terraform Apply") {
-            steps {
-                echo "========executing Terraform Apply========"
-                sh 'terraform apply -auto-approve'
-            }
-            post {
-                success {
-                    echo "========Terraform Apply executed successfully========"
-                }
-                failure {
-                    echo "========Terraform Apply execution failed========"
-                }
-            }
-        } */
 
         stage("Terraform Destroy") {
             steps {
