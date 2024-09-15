@@ -2,8 +2,8 @@ pipeline {
     agent {
         docker {
             image 'ubuntu-image'  // Use the local Docker image
-            label 'docker'        // Ensure it's using a node with Docker installed
-            reuseNode true        // Reuse the container, don't create a new one
+            reuseNode true        // Reuse the node/container
+            registryUrl ''
         }
     }
 
