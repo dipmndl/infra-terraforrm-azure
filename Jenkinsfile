@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'ubuntu-image'
-            label 'docker-agent'  // You can adjust this to your specific Jenkins node label if needed
             reuseNode true // Reuse the node without spinning up a new container each time
         }
     }
