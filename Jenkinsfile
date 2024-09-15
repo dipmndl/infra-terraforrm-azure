@@ -1,5 +1,5 @@
 pipeline {
-      agent {
+    agent {
         docker {
             image 'ubuntu-image:Latest'
             args '--network host --entrypoint=""'
@@ -16,15 +16,10 @@ pipeline {
     }
 
     stages {
-          stage("Keep Container Alive") {
-            steps {
-                sh 'tail -f /dev/null'  // Keeps the container alive
-            }
-        }
         stage('Check Docker Images') {
             steps {
-                    sh 'docker images'
-                }
+                sh 'docker images'
+            }
         }
 
         stage("Checkout") {
@@ -80,7 +75,7 @@ pipeline {
             cleanWs()
         }
         success {
-            echo "========pipeline executed successfully ========"
+            echo "========pipeline executed successfully========"
         }
         failure {
             echo "========pipeline execution failed========"
