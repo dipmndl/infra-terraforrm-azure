@@ -17,6 +17,12 @@ pipeline {
     }
 
     stages {
+        stage('Check Docker Images') {
+            steps {
+                    sh 'docker images'
+                }
+        }
+        
         stage("Checkout") {
             steps {
                 echo "========executing Checkout========"
