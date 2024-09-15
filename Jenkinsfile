@@ -1,13 +1,13 @@
 pipeline {
       agent {
-        docker {
-            image 'ubuntu-image:Latest'
-            args '--network host'
-            reuseNode true
-            alwaysPull false  // Ensure it uses the local image
-            customWorkspace '/var/lib/jenkins/workspace'
-        }
+      docker {
+        image 'ubuntu-image:Latest'
+        args '--network host --entrypoint=""' // Entry point is overridden to allow shell commands
+        reuseNode true
+        alwaysPull false  // Ensure it uses the local image
+        customWorkspace '/var/lib/jenkins/workspace'
     }
+}
 
     environment {
         TF_VAR_subscription_id = credentials('azure_subscription_id')
@@ -18,6 +18,11 @@ pipeline {
     }
 
     stages {
+         stage("Start Container") {
+            steps {
+                sh 'tail -f /dev/null'  // This will keep the container running
+            }
+         }   
         stage('Check Docker Images') {
             steps {
                     sh 'docker images'
