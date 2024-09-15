@@ -1,7 +1,7 @@
 pipeline {
       agent {
         docker {
-            image 'ubuntu-image:Latest
+            image 'ubuntu-image:Latest'
             args '--network host'
             reuseNode true
             alwaysPull false  // Ensure it uses the local image
