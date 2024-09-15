@@ -1,10 +1,10 @@
 pipeline {
-     agent {
+      agent {
         docker {
             image 'ubuntu-image'  // Use the local Docker image
-            label ''              // Use a node with Docker installed (if you don't have specific labels, leave this blank)
-            reuseNode true        // Reuse the existing node and avoid creating a new one each time
-            registryUrl ''        // Ensure that it doesn't try to pull from Docker Hub
+            args '--network host'  // Use host network to ensure proper Docker access
+            reuseNode true        // Reuse the existing node to avoid pulling the image
+            customWorkspace '/var/lib/jenkins/workspace' // Custom workspace on the Jenkins host
         }
     }
 
