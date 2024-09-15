@@ -1,5 +1,11 @@
 pipeline {
-    agent { dockerfile true }
+    agent {
+        docker {
+            image 'ubuntu-image'
+            label 'docker-agent'  // You can adjust this to your specific Jenkins node label if needed
+            reuseNode true // Reuse the node without spinning up a new container each time
+        }
+    }
 
     environment {
         TF_VAR_subscription_id = credentials('azure_subscription_id')
@@ -29,7 +35,6 @@ pipeline {
             steps {
                 echo "========executing SonarQube analysis========"
                 script {
-                    // Assuming SonarQube Scanner tool is installed in Jenkins
                     def scannerHome = tool name: 'SonarQube-Docker', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('Your SonarQube Server') {
                         sh """
@@ -96,7 +101,7 @@ pipeline {
                 }
             }
         }
-    } // Close stages block
+    }
 
     post {
         always {
@@ -110,4 +115,4 @@ pipeline {
             echo "========pipeline execution failed========"
         }
     }
-} // Close pipeline block
+}
